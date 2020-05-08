@@ -8,6 +8,7 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INSTALL_PACKAGES"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.android.permission.ACCESS_SUPERUSER"/>
 
     <application
         android:allowBackup="true"
