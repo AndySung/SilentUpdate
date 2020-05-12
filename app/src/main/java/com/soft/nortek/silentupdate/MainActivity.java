@@ -11,8 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RootCmd.haveRoot();
         mContext = this;
         mButton = findViewById(R.id.button);
         tv_text = findViewById(R.id.tv_text);
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(MainActivity.this,"Has been set to true",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this,"Has been set to true",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(MainActivity.this,"Has been set to false",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"Has been set to false",Toast.LENGTH_SHORT).show();
             }
         });
 
