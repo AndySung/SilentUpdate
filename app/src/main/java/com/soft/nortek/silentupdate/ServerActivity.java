@@ -56,6 +56,8 @@ public class ServerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
+        /* 显示App icon左侧的back键 */
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mSocketList = new ArrayList<>();
         mTvIp = findViewById(R.id.tv_ip);
         mEtPort = findViewById(R.id.et_port);
