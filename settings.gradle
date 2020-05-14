@@ -1,2 +1,2 @@
 rootProject.name='SilentUpdate'
-include ':app'
+include ':app', ':socket-client', ':socket-common-interface', ':socket-core', ':socket-server'

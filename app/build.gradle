@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.soft.nortek.silentupdate"
-        minSdkVersion 25
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -36,6 +36,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
     /*buildTypes {
         release {
@@ -56,6 +60,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api project(path: ':socket-common-interface')
+    api project(path: ':socket-client')
+    api project(path: ':socket-server')
+    api project(path: ':socket-core')
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
 repositories {
     mavenCentral()

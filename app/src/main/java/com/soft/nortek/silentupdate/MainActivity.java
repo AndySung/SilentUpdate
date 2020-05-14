@@ -6,13 +6,33 @@ import android.content.pm.IPackageInstallObserver;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.soft.nortek.silentupdate.adapter.LogAdapter;
+import com.soft.nortek.silentupdate.data.HandShakeBean;
+import com.soft.nortek.silentupdate.data.LogBean;
+import com.soft.nortek.silentupdate.data.MsgDataBean;
+import com.xuhao.didi.core.iocore.interfaces.IPulseSendable;
+import com.xuhao.didi.core.iocore.interfaces.ISendable;
+import com.xuhao.didi.core.pojo.OriginalData;
+import com.xuhao.didi.socket.client.impl.client.action.ActionDispatcher;
+import com.xuhao.didi.socket.client.sdk.OkSocket;
+import com.xuhao.didi.socket.client.sdk.client.ConnectionInfo;
+import com.xuhao.didi.socket.client.sdk.client.OkSocketOptions;
+import com.xuhao.didi.socket.client.sdk.client.action.SocketActionAdapter;
+import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,15 +40,96 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
     private Button mButton,setprop_true,setprop_false,getprop_status;
     private TextView tv_text,prop_status;
     Context mContext;
     String TAG = "MainActivity";
-    String SET_TRUE = "setprop resume_cx20921_ak7755 true \n";
-    String SET_FALSE = "setprop resume_cx20921_ak7755 false \n";
-    String GET_STATUS = "getprop resume_cx20921_ak7755 \n";
+    String SET_TRUE = "setprop\bresume_cx20921_ak7755\btrue";
+    String SET_FALSE = "setprop\bresume_cx20921_ak7755\bfalse";
+    String GET_STATUS = "getprop resume_cx20921_ak7755";
+    private RecyclerView mSendList;
+
+    /***
+     *** socket通信
+     ***/
+    //连接管理信息
+    private ConnectionInfo mInfo;
+    //连接按钮
+    private Button mConnect;
+    //连接的socket服务端的IP地址
+    private EditText mIPET;
+    //连接的socket服务端的port端口号
+    private EditText mPortET;
+    //连接管理类
+    private IConnectionManager mManager;
+    //发送的消息输入框
+    private EditText mSendET;
+    //OkSocket参数配置类
+    private OkSocketOptions mOkOptions;
+    //发送数据按钮
+    private Button mSendBtn;
+
+    //发送的log信息列表适配器
+    private LogAdapter mSendLogAdapter = new LogAdapter();
+    //接收的log信息列表适配器
+    private LogAdapter mReceLogAdapter = new LogAdapter();
+
+    /**Socket行为适配器**/
+    private SocketActionAdapter adapter = new SocketActionAdapter() {
+        @Override
+        public void onSocketConnectionSuccess(ConnectionInfo info, String action) {
+            mManager.send(new HandShakeBean());
+            mConnect.setText("DisConnect");
+            mIPET.setEnabled(false);
+            mPortET.setEnabled(false);
+        }
+
+        @Override
+        public void onSocketDisconnection(ConnectionInfo info, String action, Exception e) {
+            if (e != null) {
+                logSend("异常断开(Disconnected with exception):" + e.getMessage());
+            } else {
+                logSend("正常断开(Disconnect Manually)");
+            }
+            mIPET.setEnabled(true);
+            mPortET.setEnabled(true);
+            mConnect.setText("Connect");
+        }
+
+        @Override
+        public void onSocketConnectionFailed(ConnectionInfo info, String action, Exception e) {
+            logSend("连接失败(Connecting Failed)");
+            mConnect.setText("Connect");
+            mIPET.setEnabled(true);
+            mPortET.setEnabled(true);
+        }
+
+        @Override
+        public void onSocketReadResponse(ConnectionInfo info, String action, OriginalData data) {
+            String str = new String(data.getBodyBytes(), Charset.forName("utf-8"));
+            logRece(str);
+        }
+
+        @Override
+        public void onSocketWriteResponse(ConnectionInfo info, String action, ISendable data) {
+            String str = new String(data.parse(), Charset.forName("utf-8"));
+            logSend(str);
+        }
+
+        @Override
+        public void onPulseSend(ConnectionInfo info, IPulseSendable data) {
+            String str = new String(data.parse(), Charset.forName("utf-8"));
+            logSend(str);
+        }
+    };
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
         setprop_true = findViewById(R.id.setprop_true);
         setprop_false = findViewById(R.id.setprop_false);
         getprop_status = findViewById(R.id.getprop_status);
+        mSendET = findViewById(R.id.send_et);
+        mIPET = findViewById(R.id.ip);
+        mPortET = findViewById(R.id.port);
+        mConnect = findViewById(R.id.socketBtn);    //连接按钮
+        mSendList = findViewById(R.id.send_list);
+        mSendBtn = findViewById(R.id.send_btn);
+        initManager();
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,12 +164,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                RootCmd.execRootCmd(SET_TRUE);
-                try {
+               /* try {
                     Runtime.getRuntime().exec(SET_TRUE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-               // Toast.makeText(MainActivity.this,"Has been set to true",Toast.LENGTH_SHORT).show();
+                }*/
+                sendToService(SET_TRUE);
+                Toast.makeText(MainActivity.this,"Has been set to true",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -70,12 +179,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                RootCmd.execRootCmd(SET_FALSE);
-                try {
+                /*try {
                     Runtime.getRuntime().exec(SET_FALSE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-                //Toast.makeText(MainActivity.this,"Has been set to false",Toast.LENGTH_SHORT).show();
+                }*/
+                sendToService(SET_FALSE);
+                Toast.makeText(MainActivity.this,"Has been set to false",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -86,6 +196,52 @@ public class MainActivity extends AppCompatActivity {
                 prop_status.setText(execRootCmd(GET_STATUS));
             }
         });
+
+
+        mConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mManager == null) {
+                    return;
+                }
+                if (!mManager.isConnect()) {
+                    initManager();
+                    mManager.connect();
+                    mIPET.setEnabled(false);
+                    mPortET.setEnabled(false);
+                } else {
+                    mConnect.setText("Disconnecting");
+                    mManager.disconnect();
+                }
+            }
+        });
+
+        mSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendToService(mSendET.getText().toString());
+            }
+        });
+    }
+
+
+    public void sendToService(String msg){
+        if (mManager == null) {
+            return;
+        }
+        if (!mManager.isConnect()) {
+            Toast.makeText(getApplicationContext(), "Unconnected", LENGTH_SHORT).show();
+        } else {
+            //String msg = mSendET.getText().toString();
+            String msg1 = "{\"cmd\":55,\"data\":"+msg+"}";
+            if (TextUtils.isEmpty(msg.trim())) {
+                return;
+            }
+
+            MsgDataBean msgDataBean = new MsgDataBean(msg1);
+            mManager.send(msgDataBean);
+            mSendET.setText("");
+        }
     }
 
     @Override
@@ -152,6 +308,74 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return "";
+    }
+
+
+    /***
+     * 通过IP和Port号连接socket
+     * ***/
+    private void initManager() {
+        final Handler handler = new Handler();
+        //连接参数设置(IP,端口号),这也是一个连接的唯一标识,不同连接,该参数中的两个值至少有其一不一样
+        mInfo = new ConnectionInfo(mIPET.getText().toString(), Integer.parseInt(mPortET.getText().toString()));
+        /*  //不自动连接
+        mOkOptions = new OkSocketOptions.Builder()
+                .setReconnectionManager(new NoneReconnect())
+                .setConnectTimeoutSecond(10)
+                .setCallbackThreadModeToken(new OkSocketOptions.ThreadModeToken() {
+                    @Override
+                    public void handleCallbackEvent(ActionDispatcher.ActionRunnable runnable) {
+                        handler.post(runnable);
+                    }
+                }) .build();*/
+        ////获得当前连接通道的参配对象，设置掉线自动连接
+        mOkOptions = new OkSocketOptions.Builder()
+                .setConnectTimeoutSecond(10)
+                .setCallbackThreadModeToken(new OkSocketOptions.ThreadModeToken() {
+                    @Override
+                    public void handleCallbackEvent(ActionDispatcher.ActionRunnable runnable) {
+                        handler.post(runnable);
+                    }
+                })
+                .build();
+        mManager = OkSocket.open(mInfo).option(mOkOptions);
+        mManager.registerReceiver(adapter);
+    }
+
+    //发送消息
+    private void logSend(final String log) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            LogBean logBean = new LogBean(System.currentTimeMillis(), log);
+            mSendLogAdapter.getDataList().add(0, logBean);
+            mSendLogAdapter.notifyDataSetChanged();
+        } else {
+            final String threadName = Thread.currentThread().getName();
+            new Handler(Looper.getMainLooper()).post(() -> logSend(threadName + " 线程打印(In Thread):" + log));
+        }
+    }
+
+    //接收消息
+    private void logRece(final String log) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            LogBean logBean = new LogBean(System.currentTimeMillis(), log);
+            mReceLogAdapter.getDataList().add(0, logBean);
+            mReceLogAdapter.notifyDataSetChanged();
+        } else {
+            final String threadName = Thread.currentThread().getName();
+            new Handler(Looper.getMainLooper()).post(() -> logRece(threadName + " 线程打印(In Thread):" + log));
+
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // SerialPortManager.instance().close();
+        if (mManager != null) {
+            mManager.disconnect();
+            mManager.unRegisterReceiver(adapter);
+        }
     }
 }
 
