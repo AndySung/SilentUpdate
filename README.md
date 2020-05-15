@@ -1,5 +1,6 @@
 # SilentUpdate
-静默更新
+静默更新,socket运用 服务端与客户端
+
 # .jks是系统签名文件，这个需要根据自己的系统来进行签名，需要修改
 
 [SC60][Android7.1][Document]各版本静默安装应用
