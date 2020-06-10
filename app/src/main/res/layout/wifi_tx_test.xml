@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/wifi_channel_bonding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/channel_bonding_txt"
+                    android:textSize="14sp" />
+                <Spinner
+                    android:id="@+id/sp_channel_bonding"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:padding="10dp"
+                    android:text="null"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wifi_rf_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/rf_channel_txt"
+                    android:textSize="14sp" />
+                <Spinner
+                    android:id="@+id/sp_rf_channel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:padding="10dp"
+                    android:text="null"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/wifi_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/model_txt"
+                    android:textSize="14sp" />
+                <Spinner
+                    android:id="@+id/sp_model"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:padding="10dp"
+                    android:text="null"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wifi_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="@string/rate_txt"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14sp" />
+                <Spinner
+                    android:id="@+id/sp_rate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:padding="10dp"
+                    android:text="null"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- wifi power -->
+        <LinearLayout
+            android:id="@+id/wifi_power"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@string/power_txt"
+                android:textSize="14sp" />
+            <EditText
+                android:id="@+id/et_power"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:padding="10dp"
+                android:hint="16.5"
+                android:text="16.5"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 启动服务 -->
+            <Button
+                android:id="@+id/bt_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:layout_margin="5dp"
+                android:text="Start server" />
+            <!-- 关闭服务 -->
+            <Button
+                android:id="@+id/bt_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_red_light"
+                android:text="Close server" />
+            <!-- 发送 -->
+            <Button
+                android:id="@+id/bt_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:text="rmmod wlan"
+                android:background="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <!-- wifi power -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 启动服务 -->
+            <Button
+                android:id="@+id/btn_insmod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_orange_light"
+                android:text="@string/insmod_wifi" />
+            <!-- 关闭服务 -->
+            <Button
+                android:id="@+id/btn_tx_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:enabled="false"
+                android:textColor="@android:color/background_light"
+                android:background="@android:color/holo_green_light"
+                android:text="@string/tx_start" />
+            <!-- 发送 -->
+            <Button
+                android:id="@+id/btn_tx_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:text="@string/tx_stop"
+                android:enabled="false"
+                android:textColor="@android:color/background_light"
+                android:background="@android:color/holo_red_light"/>
+        </LinearLayout>
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- 接收的消息-->
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Server side message：" />
+            <TextView
+                android:id="@+id/clearLog"
+                android:layout_toRightOf="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="clear Log"
+                android:textColor="@color/colorAccent"/>
+        </RelativeLayout>
+        <!-- 接收消息框 -->
+        <EditText
+            android:id="@+id/et_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:editable="false"
+            android:focusableInTouchMode="false"
+            tools:ignore="Deprecated" />
+    </LinearLayout>
+</ScrollView>

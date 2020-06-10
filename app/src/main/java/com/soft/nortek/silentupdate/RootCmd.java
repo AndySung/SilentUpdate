@@ -2,9 +2,11 @@ package com.soft.nortek.silentupdate;
 
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Android运行linux命令
@@ -105,5 +107,30 @@ public  final class RootCmd {
             }
         }
         return result;
+    }
+
+    public static void execRootcmd(String cmd){
+       try {
+           Process p = Runtime.getRuntime().exec(cmd);
+
+           String data = null;
+           BufferedReader ie = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+           BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+           String error = null;
+
+           while ((error = ie.readLine()) != null
+                   && !error.equals("null")) {
+               data += error + "\n";
+           }
+
+           String line = null;
+           while ((line = in.readLine()) != null
+                   && !line.equals("null")) {
+               data += line + "\n";
+           }
+       } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("Exception:",e+"");
+        }
     }
 }

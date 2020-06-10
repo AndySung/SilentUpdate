@@ -1,0 +1,143 @@
+{
+  "SetModel": [
+    {
+      "Model": "11a/g",
+      "Rate": [
+        {
+          "RateValue": "11g 6 Mbps",
+          "getRateValue": "11A_6_MBPS"
+        },
+        {
+          "RateValue": "11g 9 Mbps",
+          "getRateValue": "11A_9_MBPS"
+        },
+        {
+          "RateValue": "11g 12 Mbps",
+          "getRateValue": "11A_12_MBPS"
+        },
+        {
+          "RateValue": "11g 18 Mbps",
+          "getRateValue": "11A_18_MBPS"
+        },
+        {
+          "RateValue": "11g 24 Mbps",
+          "getRateValue": "11A_24_MBPS"
+        },
+        {
+          "RateValue": "11g 36 Mbps",
+          "getRateValue": "11A_36_MBPS"
+        },
+        {
+          "RateValue": "11g 48 Mbps",
+          "getRateValue": "11A_48_MBPS"
+        },
+        {
+          "RateValue": "11g 54 Mbps",
+          "getRateValue": "11A_54_MBPS"
+        }
+      ]
+    },
+    {
+      "Model": "11b",
+      "Rate":  [
+        {
+          "RateValue": "11b LONG 1 Mbps",
+          "getRateValue": "11B_LONG_1_MBPS"
+        },
+        {
+          "RateValue": "11b LONG 2 Mbps",
+          "getRateValue": "11B_LONG_2_MBPS"
+        },
+        {
+          "RateValue": "11b LONG 5.5 Mbps",
+          "getRateValue": "11B_LONG_5_5_MBPS"
+        },
+        {
+          "RateValue": "11b LONG 11 Mbps",
+          "getRateValue": "11B_LONG_11_MBPS"
+        },
+        {
+          "RateValue": "11b SHORT 2 Mbps",
+          "getRateValue": "11B_SHORT_2_MBPS"
+        },
+        {
+          "RateValue": "11b SHORT 5.5 Mbps",
+          "getRateValue": "11B_SHORT_5_5_MBPS"
+        },
+        {
+          "RateValue": "11b SHORT 11 Mbps",
+          "getRateValue": "11B_SHORT_11_MBPS"
+        }
+      ]
+    },
+    {
+      "Model": "11n",
+      "Rate":  [
+        {
+          "RateValue": "MCS0 MM SG 7.2 Mbps",
+          "getRateValue": "MCS_SG_7_2_MBPS"
+        },
+        {
+          "RateValue": "MCS1 MM SG 14.4 Mbps",
+          "getRateValue": "MCS_SG_14_4_MBPS"
+        },
+        {
+          "RateValue": "MCS2 MM SG 21.7 Mbps",
+          "getRateValue": "MCS_SG_21_7_MBPS"
+        },
+        {
+          "RateValue": "MCS3 MM SG 28.9 Mbps",
+          "getRateValue": "MCS_SG_28_9_MBPS"
+        },
+        {
+          "RateValue": "MCS4 MM SG 43.3 Mbps",
+          "getRateValue": "MCS_SG_43_3_MBPS"
+        },
+        {
+          "RateValue": "MCS5 MM SG 57.8 Mbps",
+          "getRateValue": "MCS_SG_57_8_MBPS"
+        },
+        {
+          "RateValue": "MCS6 MM SG 65 Mbps",
+          "getRateValue": "MCS_SG_65_MBPS"
+        },
+        {
+          "RateValue": "MCS7 MM SG 72.2 Mbps",
+          "getRateValue": "MCS_SG_72_2_MBPS"
+        },
+        {
+          "RateValue": "MCS0 MM SG 15 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_15_MBPS"
+        },
+        {
+          "RateValue": "MCS1 MM SG 30 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_30_MBPS"
+        },
+        {
+          "RateValue": "MCS2 MM SG 45 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_45_MBPS"
+        },
+        {
+          "RateValue": "MCS3 MM SG 60 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_60_MBPS"
+        },
+        {
+          "RateValue": "MCS4 MM SG 90 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_90_MBPS"
+        },
+        {
+          "RateValue": "MCS5 MM SG 120 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_120_MBPS"
+        },
+        {
+          "RateValue": "MCS6 MM SG 135 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_135_MBPS"
+        },
+        {
+          "RateValue": "MCS7 MM SG 150 Mbps(40MHz)",
+          "getRateValue": "MCS_CB_150_MBPS"
+        }
+      ]
+    }
+  ]
+}

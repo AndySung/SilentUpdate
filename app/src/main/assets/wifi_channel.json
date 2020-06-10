@@ -1,0 +1,290 @@
+{
+  "SetChannel": [
+    {
+      "ChannelBonding": "None",
+      "RFChannel": [
+        {
+          "RF_Channel": "RF_CHAN_1",
+          "channelValue": "1"
+        },
+        {
+          "RF_Channel": "RF_CHAN_2",
+          "channelValue": "2"
+        },
+        {
+          "RF_Channel": "RF_CHAN_3",
+          "channelValue": "3"
+        },
+        {
+          "RF_Channel": "RF_CHAN_4",
+          "channelValue": "4"
+        },
+        {
+          "RF_Channel": "RF_CHAN_5",
+          "channelValue": "5"
+        },
+        {
+          "RF_Channel": "RF_CHAN_6",
+          "channelValue": "6"
+        },
+        {
+          "RF_Channel": "RF_CHAN_7",
+          "channelValue": "7"
+        },
+        {
+          "RF_Channel": "RF_CHAN_8",
+          "channelValue": "8"
+        },
+        {
+          "RF_Channel": "RF_CHAN_9",
+          "channelValue": "9"
+        },
+        {
+          "RF_Channel": "RF_CHAN_10",
+          "channelValue": "10"
+        },
+        {
+          "RF_Channel": "RF_CHAN_11",
+          "channelValue": "11"
+        },
+        {
+          "RF_Channel": "RF_CHAN_12",
+          "channelValue": "12"
+        },
+        {
+          "RF_Channel": "RF_CHAN_13",
+          "channelValue": "13"
+        },
+        {
+          "RF_Channel": "RF_CHAN_36",
+          "channelValue": "36"
+        },
+        {
+          "RF_Channel": "RF_CHAN_40",
+          "channelValue": "40"
+        },
+        {
+          "RF_Channel": "RF_CHAN_44",
+          "channelValue": "44"
+        },
+        {
+          "RF_Channel": "RF_CHAN_48",
+          "channelValue": "48"
+        },
+        {
+          "RF_Channel": "RF_CHAN_52",
+          "channelValue": "52"
+        },
+        {
+          "RF_Channel": "RF_CHAN_56",
+          "channelValue": "56"
+        },
+        {
+          "RF_Channel": "RF_CHAN_60",
+          "channelValue": "60"
+        },
+        {
+          "RF_Channel": "RF_CHAN_64",
+          "channelValue": "64"
+        },
+        {
+          "RF_Channel": "RF_CHAN_100",
+          "channelValue": "100"
+        },
+        {
+          "RF_Channel": "RF_CHAN_104",
+          "channelValue": "104"
+        },
+        {
+          "RF_Channel": "RF_CHAN_108",
+          "channelValue": "108"
+        },
+        {
+          "RF_Channel": "RF_CHAN_112",
+          "channelValue": "112"
+        },
+        {
+          "RF_Channel": "RF_CHAN_116",
+          "channelValue": "116"
+        },
+        {
+          "RF_Channel": "RF_CHAN_120",
+          "channelValue": "120"
+        },
+        {
+          "RF_Channel": "RF_CHAN_124",
+          "channelValue": "124"
+        },
+        {
+          "RF_Channel": "RF_CHAN_128",
+          "channelValue": "128"
+        },
+        {
+          "RF_Channel": "RF_CHAN_132",
+          "channelValue": "132"
+        },
+        {
+          "RF_Channel": "RF_CHAN_136",
+          "channelValue": "136"
+        },
+        {
+          "RF_Channel": "RF_CHAN_140",
+          "channelValue": "140"
+        },
+        {
+          "RF_Channel": "RF_CHAN_144",
+          "channelValue": "144"
+        },
+        {
+          "RF_Channel": "RF_CHAN_149",
+          "channelValue": "149"
+        },
+        {
+          "RF_Channel": "RF_CHAN_153",
+          "channelValue": "153"
+        },
+        {
+          "RF_Channel": "RF_CHAN_157",
+          "channelValue": "157"
+        },
+        {
+          "RF_Channel": "RF_CHAN_161",
+          "channelValue": "161"
+        },
+        {
+          "RF_Channel": "RF_CHAN_165",
+          "channelValue": "165"
+        }
+      ]
+    },
+    {
+      "ChannelBonding": "40MHz BW Primary",
+      "RFChannel":  [
+        {
+          "RF_Channel": "RF_CHAN_3",
+          "channelValue": "3"
+        },
+        {
+          "RF_Channel": "RF_CHAN_4",
+          "channelValue": "4"
+        },
+        {
+          "RF_Channel": "RF_CHAN_5",
+          "channelValue": "5"
+        },
+        {
+          "RF_Channel": "RF_CHAN_6",
+          "channelValue": "6"
+        },
+        {
+          "RF_Channel": "RF_CHAN_7",
+          "channelValue": "7"
+        },
+        {
+          "RF_Channel": "RF_CHAN_8",
+          "channelValue": "8"
+        },
+        {
+          "RF_Channel": "RF_CHAN_9",
+          "channelValue": "9"
+        },
+        {
+          "RF_Channel": "RF_CHAN_10",
+          "channelValue": "10"
+        },
+        {
+          "RF_Channel": "RF_CHAN_11",
+          "channelValue": "11"
+        },
+        {
+          "RF_Channel": "RF_CHAN_38",
+          "channelValue": "38"
+        },
+        {
+          "RF_Channel": "RF_CHAN_42",
+          "channelValue": "42"
+        },
+        {
+          "RF_Channel": "RF_CHAN_46",
+          "channelValue": "46"
+        },
+        {
+          "RF_Channel": "RF_CHAN_50",
+          "channelValue": "50"
+        },
+        {
+          "RF_Channel": "RF_CHAN_54",
+          "channelValue": "54"
+        },
+        {
+          "RF_Channel": "RF_CHAN_58",
+          "channelValue": "58"
+        },
+        {
+          "RF_Channel": "RF_CHAN_62",
+          "channelValue": "62"
+        },
+        {
+          "RF_Channel": "RF_CHAN_102",
+          "channelValue": "102"
+        },
+        {
+          "RF_Channel": "RF_CHAN_106",
+          "channelValue": "106"
+        },
+        {
+          "RF_Channel": "RF_CHAN_110",
+          "channelValue": "110"
+        },
+        {
+          "RF_Channel": "RF_CHAN_114",
+          "channelValue": "114"
+        },
+        {
+          "RF_Channel": "RF_CHAN_118",
+          "channelValue": "118"
+        },
+        {
+          "RF_Channel": "RF_CHAN_122",
+          "channelValue": "122"
+        },
+        {
+          "RF_Channel": "RF_CHAN_126",
+          "channelValue": "126"
+        },
+        {
+          "RF_Channel": "RF_CHAN_130",
+          "channelValue": "130"
+        },
+        {
+          "RF_Channel": "RF_CHAN_134",
+          "channelValue": "134"
+        },
+        {
+          "RF_Channel": "RF_CHAN_138",
+          "channelValue": "138"
+        },
+        {
+          "RF_Channel": "RF_CHAN_142",
+          "channelValue": "142"
+        },
+        {
+          "RF_Channel": "RF_CHAN_151",
+          "channelValue": "151"
+        },
+        {
+          "RF_Channel": "RF_CHAN_155",
+          "channelValue": "155"
+        },
+        {
+          "RF_Channel": "RF_CHAN_159",
+          "channelValue": "159"
+        },
+        {
+          "RF_Channel": "RF_CHAN_163",
+          "channelValue": "163"
+        }
+      ]
+    }
+  ]
+}

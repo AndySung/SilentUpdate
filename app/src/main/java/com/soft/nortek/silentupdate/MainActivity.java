@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.soft.nortek.batterystate.BatteryStateActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +29,7 @@ import permissions.dispatcher.NeedsPermission;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button Btn_Update,BtnServer,BtnClient;
+    private Button Btn_Update,BtnServer,BtnClient,BtnTX,BtnBatteryState;
     private TextView tv_text,prop_status,mTvIp;
     Context mContext;
     String TAG = "MainActivity";
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Btn_Update.setOnClickListener(this);
         BtnClient.setOnClickListener(this);
         BtnServer.setOnClickListener(this);
+        BtnTX.setOnClickListener(this);
+        BtnBatteryState.setOnClickListener(this);
     }
 
 
@@ -59,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BtnServer = findViewById(R.id.btn_server);
         BtnClient = findViewById(R.id.btn_client);
         mTvIp = findViewById(R.id.tv_ip);
+        BtnTX = findViewById(R.id.btn_tx);
+        BtnBatteryState = findViewById(R.id.btn_battery_state);
     }
-
-
 
 
     @Override
@@ -82,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btn_battery_state:
+                startActivity(new Intent(MainActivity.this, BatteryStateActivity.class));//电池服务
+                break;
             case R.id.btn_server:
                 startActivity(new Intent(MainActivity.this, ServerActivity.class));//服务器
                 break;
@@ -93,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //用重启代码测试是否有系统权限
                 /*PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
                 pm.reboot("");*/
+                break;
+            case R.id.btn_tx:
+                //去设置Wi-Fi相关数值
+                startActivity(new Intent(MainActivity.this, WifiTxTestActivity.class));
                 break;
         }
     }

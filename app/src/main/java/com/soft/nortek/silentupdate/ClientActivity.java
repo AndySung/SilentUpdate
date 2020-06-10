@@ -46,11 +46,12 @@ public class ClientActivity extends AppCompatActivity {
     private Button mBtStop;
     private Button mBtSend;
     private Button mBtSend2,bt_setprop_true,bt_setprop_false,bt_getprop_status;
-    private TextView mTvIp;
+    private TextView mTvIp,clearLog;
     Socket socket;
-    private ServerThread mServerThread;
-    private boolean isStop;
+    public ServerThread mServerThread;
+    public boolean isStop;
 
+    private Button insmod,send_tx,stop_tx;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +71,13 @@ public class ClientActivity extends AppCompatActivity {
         bt_setprop_true = findViewById(R.id.bt_setprop_true);
         bt_setprop_false = findViewById(R.id.bt_setprop_false);
         bt_getprop_status = findViewById(R.id.bt_getprop_status);
+        clearLog = findViewById(R.id.clearLog);
+
+
+        insmod = findViewById(R.id.insmod);
+
+        send_tx = findViewById(R.id.send_tx);
+        stop_tx = findViewById(R.id.stop_tx);
 
         mTvIp.setText(getLocalIpAddress());
         mBtStart.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +120,76 @@ public class ClientActivity extends AppCompatActivity {
             sendData(Constant.GET_STATUS);
         });
 
+        clearLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEtReceive.setText("");
+            }
+        });
+
+        insmod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mEtMessage.setText("rmmod wlan");
+                try {
+                    sendData("insmod /system/lib/modules/wlan.ko con_mode=5");
+                    Thread.sleep(100);
+                    sendData("killall ptt_socket_app");
+                    Thread.sleep(100);
+                    sendData("ptt_socket_app -v -d -f");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        send_tx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /***
+                 * 强发命令（b,g,a,n_20）
+                 * **/
+                String FTM = "iwpriv wlan0 ftm 1";
+                String SET_CB = "iwpriv wlan0 set_cb 0";
+                String SET_CHANNEL = "iwpriv wlan0 set_channel 1";
+                String ENA_CHAIN = "iwpriv wlan0 ena_chain 2";
+                String PWR_CNTL_MODE = "iwpriv wlan0 pwr_cntl_mode 1";
+                String SET_TXRATE = "iwpriv wlan0 set_txrate 11B_LONG_1_MBPS";
+                String SET_TXPOWER = "iwpriv wlan0 set_txpower 16.5";
+                String SET_TX_START = "iwpriv wlan0 tx 1";     //tx 1，启动tx
+                try {
+                    sendData(FTM);
+                    Thread.sleep(50);
+                    sendData(SET_CB);
+                    Thread.sleep(50);
+                    sendData(SET_CHANNEL);
+                    Thread.sleep(50);
+                    sendData(ENA_CHAIN);
+                    Thread.sleep(500);
+                    sendData(PWR_CNTL_MODE);
+                    Thread.sleep(500);
+                    sendData(SET_TXRATE);
+                    Thread.sleep(500);
+                    sendData(SET_TXPOWER);
+                    Thread.sleep(500);
+                    sendData(SET_TX_START);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        stop_tx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /***
+                 * 强发命令（b,g,a,n_20）
+                 * **/
+                String SET_TX_STOP = "iwpriv wlan0 tx 0";
+                sendData(SET_TX_STOP);
+            }
+        });
     }
 
     void sendData(String msg){
@@ -134,14 +212,15 @@ public class ClientActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void stopServerSocket() {
+    public void stopServerSocket() {
         isStop = true;
         try {
             if (socket != null) {
                 socket.close();
             }
-            Toast.makeText(ClientActivity.this, "停止服务", Toast.LENGTH_SHORT).show();
-            Log.i("Lin", "停止服务");
+            Toast.makeText(ClientActivity.this, "Stop Service", Toast.LENGTH_SHORT).show();
+            mBtStart.setText("Start server");
+            Log.i("Lin", "Stop Service");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,10 +237,10 @@ public class ClientActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ClientActivity.this, "启动服务", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ClientActivity.this, "Start Service", Toast.LENGTH_SHORT).show();
                         Log.i("Lin", "启动服务");
                         mBtStart.setText("Connected");
-                        Toast.makeText(ClientActivity.this, "成功建立与客户端的连接 : " + socketAddress, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ClientActivity.this, "Successfully established a connection with the client: " + socketAddress, Toast.LENGTH_SHORT).show();
                         Log.i("Lin", "成功建立与客户端的连接 : " + socketAddress);
                     }
                 });

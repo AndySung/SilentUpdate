@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">SilentUpdate</string>
+    <string name="model_txt">Model:&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="rate_txt">Rate:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="channel_txt">Channel:</string>
+    <string name="power_txt">Power:&#160;&#160;&#160;&#160;</string>
+    <string name="channel_bonding_txt">Channel bonding:</string>
+    <string name="rf_channel_txt">RF Channel:</string>
+    <string name="tx_start">Tx Start</string>
+    <string name="tx_stop">Tx Stop</string>
+    <string name="insmod_wifi">Insmod WIFI</string>
+
 </resources>
