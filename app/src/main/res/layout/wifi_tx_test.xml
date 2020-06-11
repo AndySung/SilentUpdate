@@ -168,7 +168,7 @@
                 android:text="Close server" />
             <!-- 发送 -->
             <Button
-                android:id="@+id/bt_send"
+                android:id="@+id/bt_rmmod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -199,7 +199,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="5dp"
-                android:enabled="false"
                 android:textColor="@android:color/background_light"
                 android:background="@android:color/holo_green_light"
                 android:text="@string/tx_start" />
@@ -211,7 +210,6 @@
                 android:layout_weight="1"
                 android:layout_margin="5dp"
                 android:text="@string/tx_stop"
-                android:enabled="false"
                 android:textColor="@android:color/background_light"
                 android:background="@android:color/holo_red_light"/>
         </LinearLayout>

@@ -36,7 +36,7 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
     private Spinner spChannelBondingValue, spRFChannelValue, spWifiModelValue, spWifiRateValue;
     private EditText power_et, mEtReceive;
     private TextView clearLog;
-    private Button mBtStart,mBtStop,mBtSend;
+    private Button mBtStart,mBtStop,mBtRmood;
 
     private ChannelBondingAdapter adpChannelBond;
     private RFChannelAdapter adpRFChannel;
@@ -70,7 +70,6 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
         register();
         closeWifi();
         setOnClick();
-
     }
 
     private void setOnClick() {
@@ -79,7 +78,7 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
         InsmodBtn.setOnClickListener(this);
         mBtStart.setOnClickListener(this);
         mBtStop.setOnClickListener(this);
-        mBtSend.setOnClickListener(this);
+        mBtRmood.setOnClickListener(this);
         clearLog.setOnClickListener(this);
     }
 
@@ -109,13 +108,10 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
 
         mBtStart = findViewById(R.id.bt_start);
         mBtStop = findViewById(R.id.bt_stop);
-        mBtSend = findViewById(R.id.bt_send);
+        mBtRmood = findViewById(R.id.bt_rmmod);
 
         mEtReceive = findViewById(R.id.et_receive);
         clearLog = findViewById(R.id.clearLog);
-
-        TXStartBtn.setBackgroundColor(Color.parseColor("#b3b2b2"));
-        TXStopBtn.setBackgroundColor(Color.parseColor("#b3b2b2"));
 
     }
 
@@ -150,6 +146,7 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
                 String RFChannel = mWifiSetChannelBean.getChannelBondingList().get(position).toString();
                 ChannelBondingValue = RFChannel;
                // Toast.makeText(WifiTxTestActivity.this,RFChannel,Toast.LENGTH_SHORT).show();
+                RFChannelValue = mWifiSetChannelBean.getChannelBondingList().get(position).getRFChannels().get(0).getChannelSetValue();
             }
 
             @Override
@@ -164,6 +161,7 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
                 String Rate = mWifiModelRateBean.getModelList().get(position).toString();
                 ModelValue = Rate;
                // Toast.makeText(WifiTxTestActivity.this,Rate,Toast.LENGTH_SHORT).show();
+                RateValue = mWifiModelRateBean.getModelList().get(position).getRates().get(0).getGetRateValue();
             }
 
             @Override
@@ -193,7 +191,6 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //  adpRate.setRateList(mWifiModelRateBean.getModelList().get(position).getRates());
 
-
                 // List<WifiModelRateBean.RateBean> Rate =  mWifiModelRateBean.getModelList().get(position).getRates();
                 RFChannelValue = adpRFChannel.getRFChannelSetValue();
                 //Toast.makeText(WifiTxTestActivity.this,adpRFChannel.getName()+":RFChannel",Toast.LENGTH_SHORT).show();
@@ -212,6 +209,8 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
     protected void onDestroy() {
         super.onDestroy();
         mWifiManager.setWifiEnabled(true); //开wifi
+        String SET_TX_STOP = "iwpriv wlan0 tx 0";
+        sendData(SET_TX_STOP);
     }
 
     @Override
@@ -221,21 +220,31 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
                 Insmod();
                 break;
             case R.id.btn_tx_start:
-                if(!ChannelBondingValue.equals("None")){            //不是None 则为n_40
-                    Execommand2Tx(RFChannelValue, RateValue, power_et.getText().toString(), "3");
-                }else {
-                    Execommand2Tx(RFChannelValue, RateValue, power_et.getText().toString(), "0");
+                if (socket != null && socket.isConnected()) {
+                    if (!ChannelBondingValue.equals("None")) {            //不是None 则为n_40
+                        Execommand2Tx(RFChannelValue, RateValue, power_et.getText().toString(), "3");
+                    } else {
+                        Execommand2Tx(RFChannelValue, RateValue, power_et.getText().toString(), "0");
+                    }
+                   // Log.i("iiiiiii:","RFChannelValue:"+RFChannelValue);
+                   // Log.i("iiiiiii:","RateValue:"+RateValue);
+                }else{
+                    Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_tx_stop:
-                /***
-                 * 强发命令（b,g,a,n_20）
-                 * **/
-                String SET_TX_STOP = "iwpriv wlan0 tx 0";
-                sendData(SET_TX_STOP);
-                Toast.makeText(WifiTxTestActivity.this, "Stop successful", Toast.LENGTH_SHORT).show();
-                TXStartBtn.setEnabled(true);
-                TXStartBtn.setBackgroundColor(Color.parseColor("#89c506"));
+                if (socket != null && socket.isConnected()) {
+                    /***
+                     * 强发命令（b,g,a,n_20）
+                     * **/
+                    String SET_TX_STOP = "iwpriv wlan0 tx 0";
+                    sendData(SET_TX_STOP);
+                    Toast.makeText(WifiTxTestActivity.this, "Stop successful", Toast.LENGTH_SHORT).show();
+                    TXStartBtn.setEnabled(true);
+                    TXStartBtn.setBackgroundColor(Color.parseColor("#89c506"));
+                }else{
+                    Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.bt_start:
                 stopServerSocket();
@@ -246,10 +255,14 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
             case R.id.bt_stop:
                 stopServerSocket();
                 break;
-            case R.id.bt_send:
-                sendData("rmmod wlan");
-                InsmodBtn.setEnabled(true);
-                InsmodBtn.setBackgroundColor(Color.parseColor("#fdae28"));
+            case R.id.bt_rmmod:
+                if (socket != null && socket.isConnected()) {
+                    sendData("rmmod wlan");
+                    InsmodBtn.setEnabled(true);
+                    InsmodBtn.setBackgroundColor(Color.parseColor("#fdae28"));
+                }else{
+                    Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.clearLog:
                 mEtReceive.setText("");
@@ -260,7 +273,6 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
     }
 
     public void Execommand2Tx(String setChannel,String setRate,String setPower,String is5G){
-       // Toast.makeText(WifiTxTestActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
         mEtReceive.setText("");
         TXStartBtn.setEnabled(false);
         TXStartBtn.setBackgroundColor(Color.parseColor("#b3b2b2"));
@@ -294,6 +306,8 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        mEtReceive.setText(FTM+"\n"+SET_CB+"\n"+SET_CHANNEL+"\n"+ENA_CHAIN+"\n"+PWR_CNTL_MODE+"\n"+SET_TXRATE+"\n"+SET_TXPOWER+"\n"+SET_TX_START+"\n" );
     }
 
     public void Insmod(){
