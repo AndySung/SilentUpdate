@@ -70,6 +70,7 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
         register();
         closeWifi();
         setOnClick();
+
     }
 
     private void setOnClick() {
@@ -209,8 +210,20 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
     protected void onDestroy() {
         super.onDestroy();
         mWifiManager.setWifiEnabled(true); //开wifi
-        String SET_TX_STOP = "iwpriv wlan0 tx 0";
-        sendData(SET_TX_STOP);
+        try {
+            if (socket != null && socket.isConnected()) {
+                String SET_TX_STOP = "iwpriv wlan0 tx 0";
+                sendData(SET_TX_STOP);
+                Thread.sleep(50);
+                sendData("rmmod wlan"); //连接上服务后先执行rmmod wlan
+            } else {
+                Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
+            }
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("iiiii","onDestory");
     }
 
     @Override
@@ -295,11 +308,11 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
             sendData(SET_CHANNEL);
             Thread.sleep(50);
             sendData(ENA_CHAIN);
-            Thread.sleep(500);
+            Thread.sleep(400);
             sendData(PWR_CNTL_MODE);
             Thread.sleep(500);
             sendData(SET_TXRATE);
-            Thread.sleep(500);
+            Thread.sleep(600);
             sendData(SET_TXPOWER);
             Thread.sleep(500);
             sendData(SET_TX_START);
@@ -332,7 +345,6 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
             Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     public void sendData(String msg){
         // final String returnServer = mEtMessage.getText().toString();
