@@ -37,6 +37,7 @@
         <activity android:name=".ServerActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".WifiTxTestActivity" android:parentActivityName=".MainActivity" />
         <activity android:name="com.soft.nortek.batterystate.BatteryStateActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name="com.soft.nortek.command.OtherCmmandActivity"/>
 
 
     </application>

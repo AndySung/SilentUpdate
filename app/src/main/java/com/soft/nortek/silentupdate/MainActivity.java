@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.soft.nortek.batterystate.BatteryStateActivity;
+import com.soft.nortek.command.OtherCmmandActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,7 +30,7 @@ import permissions.dispatcher.NeedsPermission;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button Btn_Update,BtnServer,BtnClient,BtnTX,BtnBatteryState;
+    private Button Btn_Update,BtnServer,BtnClient,BtnTX,BtnBatteryState,other_command_btn;
     private TextView tv_text,prop_status,mTvIp;
     Context mContext;
     String TAG = "MainActivity";
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BtnServer.setOnClickListener(this);
         BtnTX.setOnClickListener(this);
         BtnBatteryState.setOnClickListener(this);
+        other_command_btn.setOnClickListener(this);
     }
 
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTvIp = findViewById(R.id.tv_ip);
         BtnTX = findViewById(R.id.btn_tx);
         BtnBatteryState = findViewById(R.id.btn_battery_state);
+        other_command_btn = findViewById(R.id.other_command_btn);
     }
 
 
@@ -104,6 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_tx:
                 //去设置Wi-Fi相关数值
                 startActivity(new Intent(MainActivity.this, WifiTxTestActivity.class));
+                break;
+            case R.id.other_command_btn:
+                startActivity(new Intent(MainActivity.this, OtherCmmandActivity.class));
                 break;
         }
     }

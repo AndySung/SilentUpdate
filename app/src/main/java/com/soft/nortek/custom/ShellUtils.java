@@ -251,6 +251,7 @@ public class ShellUtils {
 
         public CommandResult(int result, String successMsg, String errorMsg) {
             this.result = result;
+           // Log.i("result:","result"+successMsg);
             this.successMsg = successMsg;
             this.errorMsg = errorMsg;
         }
