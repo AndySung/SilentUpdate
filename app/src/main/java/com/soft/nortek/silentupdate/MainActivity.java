@@ -30,7 +30,7 @@ import permissions.dispatcher.NeedsPermission;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button Btn_Update,BtnServer,BtnClient,BtnTX,BtnBatteryState,other_command_btn;
+    private Button Btn_Update,BtnServer,BtnClient,BtnTX,BtnBatteryState,other_command_btn,check_usb_btn,ota_btn;
     private TextView tv_text,prop_status,mTvIp;
     Context mContext;
     String TAG = "MainActivity";
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BtnTX.setOnClickListener(this);
         BtnBatteryState.setOnClickListener(this);
         other_command_btn.setOnClickListener(this);
+        check_usb_btn.setOnClickListener(this);
+        ota_btn.setOnClickListener(this);
     }
 
 
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         BtnTX = findViewById(R.id.btn_tx);
         BtnBatteryState = findViewById(R.id.btn_battery_state);
         other_command_btn = findViewById(R.id.other_command_btn);
+        check_usb_btn = findViewById(R.id.check_usb_btn);
+        ota_btn = findViewById(R.id.ota_btn);
     }
 
 
@@ -110,6 +114,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.other_command_btn:
                 startActivity(new Intent(MainActivity.this, OtherCmmandActivity.class));
+                break;
+            case R.id.check_usb_btn:
+                startActivity(new Intent(MainActivity.this, CheckUSBActivity.class));
+                break;
+            case R.id.ota_btn:
+                startActivity(new Intent(MainActivity.this,OTAActivity.class));
                 break;
         }
     }

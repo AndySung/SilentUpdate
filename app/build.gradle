@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.github.hotchemi:permissionsdispatcher:3.1.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
     implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.github.mjdev:libaums:+'
 }
 repositories {
     mavenCentral()

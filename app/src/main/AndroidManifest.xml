@@ -17,6 +17,13 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -37,8 +44,9 @@
         <activity android:name=".ServerActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".WifiTxTestActivity" android:parentActivityName=".MainActivity" />
         <activity android:name="com.soft.nortek.batterystate.BatteryStateActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name="com.soft.nortek.command.OtherCmmandActivity"/>
-
+        <activity android:name="com.soft.nortek.command.OtherCmmandActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".CheckUSBActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".OTAActivity" android:parentActivityName=".MainActivity"/>
 
     </application>
 

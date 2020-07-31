@@ -216,10 +216,9 @@ public class WifiTxTestActivity extends AppCompatActivity implements View.OnClic
                 sendData(SET_TX_STOP);
                 Thread.sleep(50);
                 sendData("rmmod wlan"); //连接上服务后先执行rmmod wlan
-            } else {
-                Toast.makeText(WifiTxTestActivity.this, "Please start the service first", Toast.LENGTH_SHORT).show();
+                socket.close();
             }
-        }catch (InterruptedException e) {
+        }catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
 
