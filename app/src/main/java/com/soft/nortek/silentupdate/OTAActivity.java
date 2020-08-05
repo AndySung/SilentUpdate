@@ -1,7 +1,9 @@
 package com.soft.nortek.silentupdate;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.soft.nortek.custom.FileLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +47,7 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
         onClickView();
         verifyStoragePermissions(this);
         disableClick(false,false,false,false);    //初始化不可点击
+        TestWritePurview();
     }
 
 
@@ -73,7 +78,6 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     public static void verifyStoragePermissions(Activity activity) {
-
         try {
             //检测是否有写的权限
             int permission = ActivityCompat.checkSelfPermission(activity,
@@ -184,6 +188,28 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
+    private void TestWritePurview(){
+        //sdk 大于6.0的判断
+        if (Build.VERSION.SDK_INT >= 23) {
+            int REQUEST_CODE_CONTACT = 101;
+            String[] permissions = {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            //验证是否许可权限
+            for (String str : permissions) {
+                if (OTAActivity.this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    //申请权限
+                    OTAActivity.this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
+                    return;
+                } else {
+                    FileLog.saveLog("\n Test write permission \n", "Here is to test whether the directory \"/storage/emulated/0/\" has write permission", "TestWriteLog");
+                }
+            }
+
+        }
+
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -197,6 +223,8 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
 
         Log.i("iiiii","onDestory");
     }
+
+
 
 
 
@@ -240,6 +268,8 @@ public class OTAActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
+
 
 }
 
